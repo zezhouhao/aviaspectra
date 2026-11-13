@@ -1,0 +1,27 @@
+name: 构建与检查源码 / Build and check source release
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  macos:
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: 管理边界检查 / Check management boundaries
+        run: python3 -m unittest discover -s tests -p 'test_*.py'
+      - name: 校验依赖并构建 / Fetch verified dependencies and build locally
+        run: bash scripts/setup.sh --build-only
+      - name: 原生功能检查 / Native smoke checks
+        run: python3 tests/smoke.py
+      - name: 收集测试报告 / Collect test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-report
+          path: build/tests/smoke-report.json
+          if-no-files-found: ignore
