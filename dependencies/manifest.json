@@ -1,0 +1,38 @@
+[
+  {
+    "file": "model.tflite",
+    "source": "https://raw.githubusercontent.com/birdnet-team/BirdNET-Analyzer/v1.5.1/birdnet_analyzer/checkpoints/V2.4/BirdNET_GLOBAL_6K_V2.4_Model_FP32.tflite",
+    "sha256": "55f3e4055b1a13bfa9a2452731d0d34f6a02d6b775a334362665892794165e4c",
+    "bytes": 51726412
+  },
+  {
+    "file": "labels.txt",
+    "source": "https://raw.githubusercontent.com/birdnet-team/BirdNET-Analyzer/v1.5.1/birdnet_analyzer/checkpoints/V2.4/BirdNET_GLOBAL_6K_V2.4_Labels.txt",
+    "sha256": "b50b77b7c3dfe40cd637e8cccdca0173a0a4ddee8867b830ff3c1a566f477f16",
+    "bytes": 259740
+  },
+  {
+    "file": "labels_zh.txt",
+    "source": "https://raw.githubusercontent.com/birdnet-team/BirdNET-Analyzer/v2.4.0/birdnet_analyzer/labels/V2.4/BirdNET_GLOBAL_6K_V2.4_Labels_zh.txt",
+    "sha256": "15fc72d8b946f6aa326d6d4cde3e8467cc5e2548f81bc57ced35dbb2f8601daf",
+    "bytes": 224101
+  },
+  {
+    "file": "geo.tflite",
+    "source": "https://raw.githubusercontent.com/birdnet-team/BirdNET-Analyzer/v1.5.1/birdnet_analyzer/checkpoints/V2.4/BirdNET_GLOBAL_6K_V2.4_MData_Model_V2_FP16.tflite",
+    "sha256": "1226f23fc20362617deb09178f366111b70cf085c2c82893f2814e5acedce6c2",
+    "bytes": 14770468
+  },
+  {
+    "file": "ebird_codes.json",
+    "source": "https://raw.githubusercontent.com/birdnet-team/BirdNET-Analyzer/v2.4.0/birdnet_analyzer/eBird_taxonomy_codes_2024E.json",
+    "sha256": "2a6b7b866e9ddbb842e6ca433c9455f4413c1fe5378ec105d530ca93aeacb3a9",
+    "bytes": 700672
+  },
+  {
+    "file": "litert.whl",
+    "source": "https://files.pythonhosted.org/packages/6f/12/86fe17e7069ae792c6e21c523151b34fc03b29a886340e760feaf40237dc/ai_edge_litert-2.3.0-cp312-cp312-macosx_12_0_arm64.whl",
+    "sha256": "2cd92f02fc9616755670027c5b020bfee5c72ae50cf5d33e92465a863b705a8b",
+    "bytes": 12825324
+  }
+]

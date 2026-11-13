@@ -1,0 +1,7 @@
+BirdNET V2.4 acoustic and geographic models, labels and taxonomy mapping
+BirdNET Team / K. Lisa Yang Center for Conservation Bioacoustics, Cornell Lab of Ornithology / Chemnitz University of Technology
+Models: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+https://creativecommons.org/licenses/by-nc-sa/4.0/
+https://birdnet-team.github.io/BirdNET-Analyzer/stable/faq.html
+Model sources and SHA-256: dependencies/manifest.json (bundled as dependency-manifest.json)
+Code repository: https://github.com/birdnet-team/BirdNET-Analyzer

@@ -1,0 +1,17 @@
+.DS_Store
+__pycache__/
+*.pyc
+.dependencies/
+build/
+.venv/
+*.app/
+*.o
+*.dylib
+*.tflite
+*.wav
+*.mp3
+*.log
+.env
+.env.*
+*.p12
+*.mobileprovision
