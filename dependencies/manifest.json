@@ -26,8 +26,8 @@
   {
     "file": "ebird_codes.json",
     "source": "https://raw.githubusercontent.com/birdnet-team/BirdNET-Analyzer/v2.4.0/birdnet_analyzer/eBird_taxonomy_codes_2024E.json",
-    "sha256": "2a6b7b866e9ddbb842e6ca433c9455f4413c1fe5378ec105d530ca93aeacb3a9",
-    "bytes": 700672
+    "sha256": "c794b98a29784e1ddfece60efadf83ac5d7ec0fd673e26dfccc6bf37eb3adf3e",
+    "bytes": 752850
   },
   {
     "file": "litert.whl",
