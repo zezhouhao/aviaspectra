@@ -54,6 +54,10 @@ Check registration with `python3 scripts/manage.py status`; request enablement w
 
 This is ad-hoc-signed local source compilation, not a notarized binary. If macOS blocks the app, check the source and build, and use the system's per-app handling options. Do not disable Gatekeeper globally or remove quarantine flags in bulk.
 
+
+
+After installation, try the [included real bird recordings](../samples/README.en.md); no separate audio download is needed.
+
 ## 5. Verify
 
 Use local MP3 and WAV files you are entitled to use. Confirm:
