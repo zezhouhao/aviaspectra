@@ -1,15 +1,15 @@
-# AviaSpectra icon
+# AviaSpectra icon / AviaSpectra 图标
 
-Created 2026-11-12 with the built-in image_gen tool. Original generated PNG retained as AviaSpectra.png. System sips/iconutil perform size and ICNS conversion during builds; no separate image API is needed by installers.
+Selected design: **B — bird wing and sound bars**. Generated with the built-in image_gen tool on 2026-11-13 and selected by the project author. The original generated PNG is retained as `AviaSpectra.png`; the artwork contains subtle shading despite the flat-color request below.
 
-Final prompt:
+System `sips` and `iconutil` convert the PNG into macOS icon sizes and ICNS during builds. Installers do not need an image-generation API.
 
-Use case: logo-brand. Asset type: macOS application icon for BirdScope, a bird song spectrogram and local bird recognition app. Create a single polished 1024x1024 square icon. Centered dark midnight navy rounded-square macOS tile, with genuinely transparent corners outside the tile. Inside, a bold simple turquoise and mint songbird silhouette in side profile singing, its wing and tail elegantly merge into three to five clear vertical spectrogram strokes. A tiny warm golden accent at the throat. Confident minimal geometry, softly dimensional satin finish, excellent readability at 32 pixels, strong contrast. Restrained subtle shading, uncluttered generous negative space. No letters, no words, no text, no waveform axes, no UI mockup, no photographic texture, no watermark, no extra icons. Tile fills about 90% of square canvas, centered, front view.
+选定方案：**B — 鸟翼与声波条纹**。于 2026-11-13 使用内置 image_gen 工具生成，由项目作者选定。保留生成的原始 PNG 为 `AviaSpectra.png`；成图带有轻微渐变，尽管下方提示词要求纯色。
 
-The image was generated under the working name BirdScope; it contains no text and is reused unchanged for AviaSpectra (谱羽). The original prompt above is preserved for provenance.
+构建时通过系统 `sips` 和 `iconutil` 生成各尺寸图标与 ICNS，安装者无需配置绘图 API。
 
-## 中文说明
+## Original generation prompt / 原始生成提示词
 
-图标于2026-11-12通过内置 image_gen 工具生成，保留原始 PNG；安装时用系统 sips/iconutil 转换尺寸与 ICNS，不需要用户配置绘图 API。
+Use case: logo-brand. Asset type: a simplified macOS app icon proposal for AviaSpectra, a bird-song spectrogram viewer. Create ONE icon, square 1024x1024, not a presentation sheet. A perfectly flat dark midnight navy rounded-square tile centered and occupying 88% of canvas, genuinely transparent corners outside. Inside use a single flat turquoise symbol, strong clear silhouette, generous breathing room, exceptionally simple geometry readable at 32px. Only two solid colors navy and turquoise. No gradient, no texture, no 3D, no shadows, no glow, no small ornament, no words, no letters, no labels, no watermark.
 
-图标在 BirdScope 开发名时期生成，图中没有文字，因此原样用于 AviaSpectra（谱羽）。上方英文提示词为原始创作记录，保持原文以便追溯。图案概念为深蓝圆角图标中的青绿色鸣禽，翅尾融合声谱条纹，喉部带少量金色强调。
+Concept B: one abstract soaring bird-wing mark formed from a single broad smooth rising curve, tapering at its two ends, integrated with exactly three short thick vertical rounded bars below its right half, suggesting bird-song sound energy. Keep the whole mark visually one unit, balanced, exceptionally spare. No eyes, feet, feather detail or literal full bird body. No more than four graphic elements total.
