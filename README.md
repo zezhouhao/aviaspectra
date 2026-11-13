@@ -58,6 +58,10 @@ AviaSpectra 把这些信息集中在 Finder 的快速预览里：选中文件，
 - **快速核实**：浮动卡片显示中文名、拉丁名及评分，链接到 XC 和 eBird 物种页面。
 - **多个候选**：不同颜色对应候选时间条，更多候选可通过菜单切换。
 
+## 直接体验真实鸟鸣
+
+项目已自带 **3 段真实鸟鸣 MP3 + 1 份 WAV 副本，合计约 3.6 MB**。安装后打开 [samples 文件夹](samples/README.md)，选中音频按空格即可体验，无需另外寻找或下载样本。包含小嘴乌鸦、赭红尾鸲和原鸽，作者署名及 CC BY-SA 4.0 许可随音频附上。
+
 ## 最快开始
 
 1. 点击本项目绿色 **Code → Download ZIP**，解压到 Mac 内置磁盘上的普通文件夹。
@@ -116,4 +120,4 @@ python3 scripts/manage.py uninstall
 
 AviaSpectra 原创代码采用 [MIT](LICENSE)；BirdNET 模型采用 **CC BY-NC-SA 4.0，仅限非商业用途**；LiteRT 采用 Apache 2.0。源码许可不改变模型使用条件。来源和署名见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。本项目与 BirdNET、XC、eBird 无官方隶属关系。
 
-不含真实鸟鸣样本；测试音由脚本合成。欢迎通过 Issues 提交问题与建议，请注明芯片、系统版本、安装步骤及错误信息。
+自带三段获许可的真实鸟鸣及一份 WAV 格式副本，见 [samples](samples/README.md)；合成测试音仍由脚本生成。欢迎通过 Issues 提交问题与建议，请注明芯片、系统版本、安装步骤及错误信息。

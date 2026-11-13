@@ -15,3 +15,9 @@ build/
 .env.*
 *.p12
 *.mobileprovision
+
+# Licensed demo audio only / 仅获许可的体验音频
+!/samples/XC24828.mp3
+!/samples/XC473244.mp3
+!/samples/XC539061.mp3
+!/samples/XC24828.wav

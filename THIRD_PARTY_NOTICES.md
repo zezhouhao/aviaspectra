@@ -22,3 +22,9 @@ vendor/litert/build_common/build_config.h 是最小本地 C 调用适配头，�
 XC/eBird 链接通过用户浏览器打开；网站内容不打包、不再分发，离线推断不依赖这些网站。
 
 MIT 和第三方许可原文保持不变；中文介绍用于理解，不替代原始许可文本。
+
+## 真实体验音频 / Real demo recordings
+
+Three MP3 recordings and one derived WAV in `samples/` are CC BY-SA 4.0, not MIT. Recordists: Sander Pieterse and Marie-Lan Taÿ Pamart. Full source links, attribution and changes: [中文](samples/README.md) · [English](samples/README.en.md).
+
+`samples/` 中三段 MP3 和一份转换 WAV 采用 CC BY-SA 4.0，独立于 MIT 代码许可；录音者为 Sander Pieterse 和 Marie-Lan Taÿ Pamart。署名、来源、修改说明见上述双语页面。

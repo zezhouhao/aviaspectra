@@ -20,3 +20,9 @@ Downloaded artifacts have pinned SHA-256 and byte counts. Model manifests and no
 `vendor/litert/build_common/build_config.h` is a minimal local C-consumer shim; see [vendor documentation](vendor/README.md). No XC recordings are distributed with this repository or app. Test audio is generated synthetically.
 
 The app opens XC/eBird species links in the user's browser. Those websites' content is not bundled or redistributed. Neither website is required for offline inference.
+
+## 真实体验音频 / Real demo recordings
+
+Three MP3 recordings and one derived WAV in `samples/` are CC BY-SA 4.0, not MIT. Recordists: Sander Pieterse and Marie-Lan Taÿ Pamart. Full source links, attribution and changes: [中文](samples/README.md) · [English](samples/README.en.md).
+
+`samples/` 中三段 MP3 和一份转换 WAV 采用 CC BY-SA 4.0，独立于 MIT 代码许可；录音者为 Sander Pieterse 和 Marie-Lan Taÿ Pamart。署名、来源、修改说明见上述双语页面。

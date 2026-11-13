@@ -58,6 +58,10 @@ Open **地点：全球** (Location: Global) to choose a preset city or enter rec
 - **Verification links:** a movable card shows Chinese/scientific names and scores, with XC/eBird links.
 - **Multiple candidates:** coloured time spans correspond to candidates; a menu exposes more candidates.
 
+## Try the included bird recordings
+
+The project includes **3 real MP3 recordings + 1 WAV copy, about 3.6 MB total**. After installation, open [samples](samples/README.en.md), select a file and press Space. No separate audio download is needed. Carrion Crow, Black Redstart and Rock Dove samples include recordist credits and CC BY-SA 4.0 licence details.
+
 ## Quick start
 
 1. Select **Code → Download ZIP**, extract to a normal folder on your Mac's internal storage.
@@ -116,4 +120,4 @@ Build only: `bash scripts/setup.sh --build-only`. Tests: `python3 tests/smoke.py
 
 Original code is [MIT](LICENSE). BirdNET models are **CC BY-NC-SA 4.0, noncommercial**; LiteRT is Apache 2.0. Code licensing does not override model terms. See [third-party notices](THIRD_PARTY_NOTICES.en.md). This project is not affiliated with BirdNET, XC, or eBird.
 
-No real recordings are included; test audio is synthesized. Issues are welcome in Chinese or English. Include hardware, macOS version, installation steps, and errors. See our [bilingual publishing policy](docs/BILINGUAL.en.md).
+Three licensed real bird recordings and one WAV copy are included in [samples](samples/README.en.md); synthetic tests remain script-generated. Issues are welcome in Chinese or English. Include hardware, macOS version, installation steps, and errors. See our [bilingual publishing policy](docs/BILINGUAL.en.md).
