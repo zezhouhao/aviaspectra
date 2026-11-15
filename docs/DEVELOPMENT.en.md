@@ -9,7 +9,7 @@
 - `PreviewController.swift`: shared app/Quick Look UI, two-axis zoom, selection, player, return-to-whole.
 - `Recognition.swift` / `AudioSelection.swift`: 48 kHz conversion, three-second windows, selection filtering and cancellation.
 - `NativeBirdEngine.swift` / `LiteBridge.c`: LiteRT CPU C API, acoustic/geographic models and cache.
-- `SpeciesLinks.swift` / `LocationChooser.swift`: links, floating card and recording-location settings.
+- `SpeciesLinks.swift` / `LocationChooser.swift`: links, fixed result rows and recording-location settings.
 - `main.swift` / `QuickLook.swift`: app and extension entry points.
 - `scripts/`: checks, dependency fetching, building, current-user app management.
 - `dependencies/`: pinned manifests; downloaded artifacts stay out of Git.
@@ -31,7 +31,7 @@ About 81 MB is downloaded. Models/runtime are embedded in both app and extension
 
 Zoom does not invoke selection recognition. Selection coordinates remain in original audio time/frequency. Overview resets only the view; return-to-whole restores all candidates. Cancelled tasks must not overwrite newer results through stale callbacks. Audio remains read-only.
 
-Spectrogram: FFT 2048/Hann, channel 1, 0–12 kHz. Recognition: at most eight channels, per-class maximum after per-channel inference; sigmoid V2.4 logits before ranking. Each window returns its top five scores ≥0.1; UI candidates require ≥0.5. The geographic model takes latitude, longitude and year-round (-1), retaining priors ≥0.03 without recalibrating acoustic scores. Cache keys include PCM content and location parameters; bump keys when models/algorithms change.
+Spectrogram: FFT 2048/Hann, channel 1, 0–12 kHz. Recognition: at most eight channels, per-class maximum after per-channel inference; sigmoid V2.4 logits before ranking. Each window returns its top five confidence values ≥0.1; UI candidates require ≥0.5. The geographic model takes latitude, longitude and year-round (-1), retaining priors ≥0.03 without recalibrating acoustic confidence values. Cache keys include PCM content and location parameters; bump keys when models/algorithms change.
 
 ## Automated checks
 

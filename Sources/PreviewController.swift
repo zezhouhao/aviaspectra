@@ -63,15 +63,6 @@ final class SpectrogramView: NSView {
         if let selected=preferredSpecies,let index=ranked.firstIndex(where:{$0.scientific==selected}) {let bird=ranked.remove(at:index);ranked.insert(bird,at:0)}
         return Array(ranked.prefix(3))
     }
-    var floatingCard:FloatingSpeciesCard?
-    override func layout(){
-        super.layout()
-        if let card=floatingCard {
-            let p=plot, width=min(570,max(100,p.width-24)),height=Double(rankedBirds.count)*24+16+(additionalCandidates ? 24 : 0)
-            let origin=card.userPosition ?? NSPoint(x:p.maxX-width-12,y:p.maxY-height-12)
-            card.frame=NSRect(x:min(p.maxX-width,max(p.minX,origin.x)),y:min(p.maxY-height,max(p.minY,origin.y)),width:width,height:height)
-        }
-    }
     var regionTips:[NSView.ToolTipTag:String]=[:]
     var plot: NSRect { NSRect(x: 60, y: 34, width: max(1,bounds.width-80), height: max(1,bounds.height-125-Double(rankedBirds.count)*12)) }
     func view(_ view:NSView,stringForToolTip tag:NSView.ToolTipTag,point:NSPoint,userData:UnsafeMutableRawPointer?)->String {regionTips[tag] ?? ""}
@@ -198,7 +189,7 @@ class PreviewController: NSViewController {
     let speciesRows=(0..<3).map{_ in SpeciesLinkRow(frame:.zero)}
     let moreCandidates=NSButton(title:"更多候选 ▾",target:nil,action:nil)
     var allCandidates:[BirdPrediction]=[]
-    let speciesCard=FloatingSpeciesCard(frame:.zero)
+    let speciesPanel=NSView(frame:.zero)
     var recognitionJob:RecognitionJob?
     var recognitionStarted:Date?
     let progress=NSSlider(value:0,minValue:0,maxValue:1,target:nil,action:nil)
@@ -236,19 +227,20 @@ class PreviewController: NSViewController {
         recognitionSummary.lineBreakMode = .byTruncatingTail
         recognitionSummary.isHidden=true;note.isHidden=true
         speciesRows.forEach{$0.isHidden=true}
-        moreCandidates.target=self;moreCandidates.action = #selector(showCandidates);moreCandidates.isBordered=false;moreCandidates.font = .systemFont(ofSize:11);moreCandidates.toolTip="选择候选以查看对应的时间分布";moreCandidates.isHidden=true
-        let cardStack=NSStackView(views:speciesRows.map{$0 as NSView}+[moreCandidates]);cardStack.orientation = .vertical;cardStack.alignment = .leading;cardStack.spacing=4
-        speciesCard.wantsLayer=true;speciesCard.layer?.backgroundColor=NSColor(calibratedRed:0.04,green:0.07,blue:0.10,alpha:0.88).cgColor;speciesCard.layer?.cornerRadius=9
-        speciesCard.layer?.borderWidth=1;speciesCard.layer?.borderColor=NSColor(white:1,alpha:0.12).cgColor
-        speciesCard.addSubview(cardStack);cardStack.translatesAutoresizingMaskIntoConstraints=false
-        NSLayoutConstraint.activate([cardStack.leadingAnchor.constraint(equalTo:speciesCard.leadingAnchor,constant:10),cardStack.trailingAnchor.constraint(equalTo:speciesCard.trailingAnchor,constant:-10),cardStack.centerYAnchor.constraint(equalTo:speciesCard.centerYAnchor)])
-        for (i,row) in speciesRows.enumerated(){row.name.textColor=[NSColor.systemCyan,.systemOrange,.systemPink][i];row.heightAnchor.constraint(equalToConstant:20).isActive=true;row.widthAnchor.constraint(equalTo:cardStack.widthAnchor).isActive=true}
-        graph.addSubview(speciesCard);graph.floatingCard=speciesCard;speciesCard.isHidden=true
+        moreCandidates.target=self;moreCandidates.action = #selector(showCandidates);moreCandidates.isBordered=false;moreCandidates.font = .systemFont(ofSize:13);moreCandidates.toolTip="选择候选以查看对应的时间分布";moreCandidates.isHidden=true
+        let resultsStack=NSStackView(views:speciesRows.map{$0 as NSView}+[moreCandidates]);resultsStack.orientation = .vertical;resultsStack.alignment = .leading;resultsStack.spacing=6
+        resultsStack.detachesHiddenViews=true
+        speciesPanel.wantsLayer=true;speciesPanel.layer?.backgroundColor=NSColor(calibratedRed:0.035,green:0.055,blue:0.08,alpha:1).cgColor;speciesPanel.layer?.cornerRadius=9
+        speciesPanel.layer?.borderWidth=1;speciesPanel.layer?.borderColor=NSColor(white:1,alpha:0.16).cgColor
+        speciesPanel.addSubview(resultsStack);resultsStack.translatesAutoresizingMaskIntoConstraints=false
+        NSLayoutConstraint.activate([resultsStack.leadingAnchor.constraint(equalTo:speciesPanel.leadingAnchor,constant:14),resultsStack.trailingAnchor.constraint(equalTo:speciesPanel.trailingAnchor,constant:-14),resultsStack.topAnchor.constraint(equalTo:speciesPanel.topAnchor,constant:10),resultsStack.bottomAnchor.constraint(equalTo:speciesPanel.bottomAnchor,constant:-10)])
+        for (i,row) in speciesRows.enumerated(){row.name.textColor=[NSColor.systemCyan,.systemOrange,.systemPink][i];row.heightAnchor.constraint(equalToConstant:34).isActive=true;row.widthAnchor.constraint(equalTo:resultsStack.widthAnchor).isActive=true}
+        speciesPanel.isHidden=true
         let recognition=NSStackView(views:[recognitionStatus,recognitionSummary]);recognition.orientation = .vertical;recognition.alignment = .leading;recognition.spacing=5
-        let stack=NSStackView(views:[top,toolbar,graph,recognition,bottom,note]);stack.orientation = .vertical;stack.alignment = .leading;stack.spacing=18
+        let stack=NSStackView(views:[top,toolbar,speciesPanel,graph,recognition,bottom,note]);stack.orientation = .vertical;stack.alignment = .leading;stack.spacing=14
         if let extras=extraControls { stack.insertArrangedSubview(extras,at:1) }
         view.addSubview(stack);stack.translatesAutoresizingMaskIntoConstraints=false
-        NSLayoutConstraint.activate([stack.leadingAnchor.constraint(equalTo:view.leadingAnchor,constant:24),stack.trailingAnchor.constraint(equalTo:view.trailingAnchor,constant:-24),stack.topAnchor.constraint(equalTo:view.topAnchor,constant:24),stack.bottomAnchor.constraint(equalTo:view.bottomAnchor,constant:-20),graph.widthAnchor.constraint(equalTo:stack.widthAnchor),graph.heightAnchor.constraint(greaterThanOrEqualToConstant:300),bottom.widthAnchor.constraint(equalTo:stack.widthAnchor),top.widthAnchor.constraint(equalTo:stack.widthAnchor),recognition.widthAnchor.constraint(equalTo:stack.widthAnchor),recognitionSummary.widthAnchor.constraint(equalTo:stack.widthAnchor),play.widthAnchor.constraint(equalToConstant:100)])
+        NSLayoutConstraint.activate([stack.leadingAnchor.constraint(equalTo:view.leadingAnchor,constant:24),stack.trailingAnchor.constraint(equalTo:view.trailingAnchor,constant:-24),stack.topAnchor.constraint(equalTo:view.topAnchor,constant:24),stack.bottomAnchor.constraint(equalTo:view.bottomAnchor,constant:-20),graph.widthAnchor.constraint(equalTo:stack.widthAnchor),speciesPanel.widthAnchor.constraint(equalTo:stack.widthAnchor),graph.heightAnchor.constraint(greaterThanOrEqualToConstant:300),bottom.widthAnchor.constraint(equalTo:stack.widthAnchor),top.widthAnchor.constraint(equalTo:stack.widthAnchor),recognition.widthAnchor.constraint(equalTo:stack.widthAnchor),recognitionSummary.widthAnchor.constraint(equalTo:stack.widthAnchor),play.widthAnchor.constraint(equalToConstant:100)])
         graph.wantsLayer=true;graph.layer?.cornerRadius=12
         graph.onSelectionChanged={ [weak self] in
             guard let self=self else{return}
@@ -260,7 +252,7 @@ class PreviewController: NSViewController {
         preferredContentSize=NSSize(width:1040,height:800)
     }
     func load(_ url:URL, completion:((Error?)->Void)?=nil) {
-        _=view;restoreOverviewButton.isEnabled=false;graph.selection=nil;fitButton.title="全览";currentURL=url;detailWork?.cancel();detailToken=UUID();graph.visibleStart=0;graph.visibleDuration=0;graph.visibleLowFrequency=0;graph.detailAnalysis=nil;graph.preferredSpecies=nil;graph.additionalCandidates=false;moreCandidates.isHidden=true;allCandidates=[];speciesCard.isHidden=true;speciesCard.userPosition=nil;speciesRows.forEach{$0.isHidden=true};recognitionJob?.cancel();recognitionJob=nil;graph.segments=[];recognitionStatus.isHidden=false;recognitionStatus.stringValue="识别中…";recognitionSummary.isHidden=true;recognitionSummary.stringValue="";player?.stop();timer?.invalidate();player=nil;graph.analysis=nil;progress.isEnabled=false;play.isEnabled=false
+        _=view;restoreOverviewButton.isEnabled=false;graph.selection=nil;fitButton.title="全览";currentURL=url;detailWork?.cancel();detailToken=UUID();graph.visibleStart=0;graph.visibleDuration=0;graph.visibleLowFrequency=0;graph.detailAnalysis=nil;graph.preferredSpecies=nil;graph.additionalCandidates=false;moreCandidates.isHidden=true;allCandidates=[];speciesPanel.isHidden=true;speciesRows.forEach{$0.isHidden=true};recognitionJob?.cancel();recognitionJob=nil;graph.segments=[];recognitionStatus.isHidden=false;recognitionStatus.stringValue="识别中…";recognitionSummary.isHidden=true;recognitionSummary.stringValue="";player?.stop();timer?.invalidate();player=nil;graph.analysis=nil;progress.isEnabled=false;play.isEnabled=false
         let current=UUID();token=current
         heading.stringValue=url.lastPathComponent;subtitle.stringValue="正在计算声谱图…";play.title="▶ 播放"
         DispatchQueue.global(qos:.userInitiated).async { [weak self] in
@@ -308,13 +300,13 @@ class PreviewController: NSViewController {
     @objc func clearSelection(){graph.selection=nil}
     @objc func restoreOverview(){
         guard let url=currentURL,graph.analysis != nil else{return}
-        graph.selection=nil;graph.preferredSpecies=nil;speciesCard.userPosition=nil
+        graph.selection=nil;graph.preferredSpecies=nil
         graph.fit()
         recognize(url,current:token)
     }
     func recognize(_ url:URL,current:UUID,selection:AudioSelection?=nil) {
         recognitionJob?.cancel();let requestID=UUID();recognitionID=requestID
-        graph.segments=[];refreshCandidates();speciesCard.isHidden=true;recognitionStatus.isHidden=false;recognitionStatus.stringValue="识别中…"
+        graph.segments=[];refreshCandidates();speciesPanel.isHidden=true;recognitionStatus.isHidden=false;recognitionStatus.stringValue="识别中…"
         let job=RecognitionJob();recognitionJob=job;recognitionStarted=Date()
         job.run(url,selection:selection,location:recordingLocation,update:{[weak self] segment,progress,cached,elapsed in
             guard let self=self,self.token==current,self.recognitionID==requestID else{return}
@@ -335,7 +327,7 @@ class PreviewController: NSViewController {
         }}
         allCandidates=best.values.sorted{$0.score>$1.score}
         let ranked=graph.rankedBirds
-        speciesCard.isHidden=ranked.isEmpty
+        speciesPanel.isHidden=ranked.isEmpty
         graph.additionalCandidates=allCandidates.count>3;moreCandidates.isHidden = !graph.additionalCandidates
         moreCandidates.title="更多候选 (\(max(0,allCandidates.count-3))) ▾"
         for (i,row) in speciesRows.enumerated(){row.isHidden=i>=ranked.count;if !row.isHidden{row.show(ranked[i])}}

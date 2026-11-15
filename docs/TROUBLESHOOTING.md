@@ -33,3 +33,7 @@ python3 scripts/manage.py enable
 ## 报告问题
 
 填写 Issues 模板，提供芯片、macOS 版本、开发工具版本、出错阶段和已去除个人路径的日志。不要上传凭证或未经许可的录音。合成测试可以运行 `python3 tests/smoke.py`。
+
+## 物种链接没有打开浏览器
+
+Finder 快速预览宿主可能拒绝浏览器跳转；此时点击“复制链接”，再粘贴到浏览器。独立应用已验证可直接打开 eBird。

@@ -80,6 +80,45 @@ if CommandLine.arguments.count==3 && CommandLine.arguments[1]=="--check-restore"
     print("Whole -> selection -> clear -> restore, full candidates/timeline, viewport reset and in-flight cancellation: PASS");exit(0)
 }
 
+if CommandLine.arguments.count==2 && CommandLine.arguments[1]=="--check-results" {
+    _=NSApplication.shared
+    func verify(_ condition:@autoclosure()->Bool,_ message:String="",line:Int=#line){
+        if !condition(){fputs("Result UI check failed at line \(line): \(message)\n",stderr);exit(1)}
+    }
+    let birds=[BirdPrediction(scientific:"Campylorhamphus falcularius",name:"黑嘴镰嘴䴕雀",english:"Black-billed Scythebill",score:0.99),BirdPrediction(scientific:"Passerina ciris",name:"丽彩鹀",english:"Painted Bunting",score:0.90),BirdPrediction(scientific:"Corvus corone",name:"小嘴乌鸦",english:"Carrion Crow",score:0.80)]
+    for width in [850.0,1080.0] {for count in [1,3] {
+        let controller=PreviewController();let window=NSWindow(contentRect:NSRect(x:0,y:0,width:width,height:820),styleMask:[.titled,.resizable],backing:.buffered,defer:false)
+        let host=NSView(frame:NSRect(x:0,y:0,width:width,height:820));window.contentView=host
+        host.addSubview(controller.view);controller.view.translatesAutoresizingMaskIntoConstraints=false
+        NSLayoutConstraint.activate([controller.view.leadingAnchor.constraint(equalTo:host.leadingAnchor),controller.view.trailingAnchor.constraint(equalTo:host.trailingAnchor),controller.view.topAnchor.constraint(equalTo:host.topAnchor),controller.view.bottomAnchor.constraint(equalTo:host.bottomAnchor)])
+        controller.graph.segments=[BirdSegment(start:0,end:3,predictions:Array(birds.prefix(count)))];controller.refreshCandidates()
+        controller.preferredContentSize=NSSize(width:width,height:820);window.setContentSize(NSSize(width:width,height:820));host.setFrameSize(NSSize(width:width,height:820))
+        host.needsLayout=true;controller.view.needsLayout=true;host.layoutSubtreeIfNeeded()
+        RunLoop.current.run(until:Date().addingTimeInterval(0.05));host.layoutSubtreeIfNeeded()
+        verify(abs(controller.view.frame.width-width)<0.1,"Test host did not apply requested width")
+        verify(controller.speciesPanel.superview !== controller.graph && !controller.speciesPanel.isHidden)
+        verify(controller.speciesPanel.frame.width>=width-50)
+        for row in controller.speciesRows where !row.isHidden {
+            verify(row.name.font!.pointSize>=16 && row.ebird.isEnabled)
+            let rect=row.ebird.convert(row.ebird.bounds,to:controller.view)
+            let point=NSPoint(x:rect.midX,y:rect.midY)
+            let hit=controller.view.hitTest(point)
+            verify(hit === row.ebird || hit?.isDescendant(of:row.ebird)==true,"eBird hit target blocked")
+            verify(row.ebird.bounds.width>=88 && row.ebird.bounds.height>=30)
+            verify(controller.speciesPanel.bounds.contains(controller.speciesPanel.convert(rect,from:controller.view)),"eBird outside fixed panel")
+            var opened:[URL]=[];row.openURL={opened.append($0);return true}
+            row.ebird.performClick(nil);row.latin.performClick(nil)
+            verify(opened.count==2 && opened[0]==row.ebirdURL && opened[1]==row.xcURL)
+            verify(opened[0].absoluteString.hasPrefix("https://ebird.org/species/"))
+        }
+        print("Result rows: width=\(width), candidates=\(count), bounds + hit targets + eBird/XC actions: PASS")
+    }}
+    let row=SpeciesLinkRow(frame:.zero)
+    row.show(BirdPrediction(scientific:"Human vocal",name:"人声",english:"Human vocal",score:0.9))
+    verify(!row.ebird.isEnabled && !row.latin.isEnabled)
+    print("Unknown/non-bird links disabled: PASS");exit(0)
+}
+
 final class AppDelegate:NSObject,NSApplicationDelegate,NSWindowDelegate {
     var window:NSWindow!
     let controller=PreviewController()
@@ -93,7 +132,7 @@ final class AppDelegate:NSObject,NSApplicationDelegate,NSWindowDelegate {
         let open=NSButton(title:"打开其它音频…",target:self,action:#selector(openFile));open.bezelStyle = .rounded;buttons.addArrangedSubview(open)
         controller.extraControls=buttons
         window=NSWindow(contentRect:NSRect(x:0,y:0,width:1080,height:820),styleMask:[.titled,.closable,.miniaturizable,.resizable],backing:.buffered,defer:false)
-        window.title="AviaSpectra 谱羽 · 鸟鸣声谱预览";window.contentViewController=controller;window.minSize=NSSize(width:850,height:700);window.delegate=self;window.center();window.makeKeyAndOrderFront(nil)
+        window.title="AviaSpectra 谱羽 · 鸟鸣声谱预览 1.0.1";window.contentViewController=controller;window.minSize=NSSize(width:850,height:700);window.delegate=self;window.center();window.makeKeyAndOrderFront(nil)
         keyMonitor=NSEvent.addLocalMonitorForEvents(matching:.keyDown){[weak self] event in
             guard let self=self,self.window.isKeyWindow,!(self.window.firstResponder is NSTextView) else{return event}
             if event.keyCode==49 && event.modifierFlags.intersection([.command,.control,.option]).isEmpty {self.controller.toggle();return nil}

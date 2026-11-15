@@ -24,8 +24,10 @@ def main():
     assert all(not s['predictions'] for s in result['segments'])
     zoom=run([BINARY,'--check-zoom',OUT/'chirps.wav']).strip()
     restore=run([BINARY,'--check-restore',OUT/'silence.wav']).strip()
+    results=run([BINARY,'--check-results']).strip()
+    assert results.endswith('PASS')
     assert zoom.endswith('PASS') and restore.endswith('PASS')
-    report={'status':'PASS','spectrogram_1khz_peak_hz':analysis['peak_hz'],'silence_predictions':0,'zoom':zoom,'restore':restore,'quick_look_gui':'Manual verification required; no extension registration in this test.'}
+    report={'status':'PASS','spectrogram_1khz_peak_hz':analysis['peak_hz'],'silence_predictions':0,'zoom':zoom,'restore':restore,'results_panel':results,'quick_look_gui':'Manual verification required; no extension registration in this test.'}
     (OUT/'smoke-report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
     print(json.dumps(report,ensure_ascii=False,indent=2))
 if __name__=='__main__':main()

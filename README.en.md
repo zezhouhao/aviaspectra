@@ -21,31 +21,17 @@ AviaSpectra brings those steps into Finder Quick Look. Select a file and press S
 
 **Sub-second candidate feedback has been observed in short-recording demonstrations on the development Mac.** The interface displayed analysis times of approximately **0.1–0.6 seconds** in a small number of demonstrations. These are UI readings, not a formal benchmark or a standardized measurement from pressing Space to receiving all results. Initial model loading, cache state, recording length, and hardware affect waiting time. This helps you inspect individual files quickly; **it does not batch-identify an entire folder with one keystroke or replace manual verification**.
 
-**Version 1.0.0: a source-first release.** Apple Silicon; local compilation; no Apple Developer Program membership required. Deployment target macOS 14+, actually tested on macOS 27.0.1. Other target systems and fresh-machine installation remain to be validated; see [validation](docs/VALIDATION.en.md). GitHub documentation is bilingual; **the app interface is currently Chinese**.
+**Version 1.0.1: fixed species-result rows.** Apple Silicon; local compilation; no Apple Developer Program membership required. Deployment target macOS 14+, actually tested on macOS 27.0.1. Other target systems and fresh-machine installation remain to be validated; see [validation](docs/VALIDATION.en.md). GitHub documentation is bilingual; **the app interface is currently Chinese**.
 
 ## See the actual app
 
-These are real screenshots of AviaSpectra 1.0.0 running on the development Mac with test recording XC141531. They show the standalone app; Finder's Space-key preview shares the core controller but has different window chrome and no “Open another audio” button.
+![AviaSpectra 1.0.1 fixed species rows above the spectrogram](assets/aviaspectra-results-1.0.1.jpg)
 
-### See the sound and its species candidates together
+Version 1.0.1 places results above the spectrogram: common/scientific names, confidence and a dedicated eBird button. Multiple candidates occupy separate rows and match the colours of their timeline bars. Scientific names link to XC; eBird buttons link to species information.
 
-![AviaSpectra running with a waveform, spectrogram, species candidate and playback controls](assets/aviaspectra-overview.png)
+The screenshot uses included recording XC24828, whose source labels the main species as Carrion Crow. The model also proposes other candidates. **Confidence is a model output, not calibrated identification accuracy.** Candidate ranking still requires listening and verification.
 
-The waveform sits above the spectrogram. The floating card shows **Painted Bunting · Passerina ciris** as a candidate, with scientific-name and eBird links for verification. The displayed 1.00 is a rounded model score, not 100% certainty.
-
-### Zoom for detail, then draw a box to re-analyse
-
-![Actual 2x zoom and a yellow time-frequency box after selection recognition](assets/aviaspectra-selection.png)
-
-Both axes are zoomed **2×**. The yellow box covers **14.40–16.68 seconds and approximately 3.1–6.8 kHz**. After **识别选框** (Recognize selection), the card shows the selected passage's candidate with a score of 0.84. **返回整体** (Return to whole) restores the entire view and full-recording candidates.
-
-### Choose where the recording was made
-
-![Actual recording-location dialog with custom latitude and longitude fields](assets/aviaspectra-location.png)
-
-Open **地点：全球** (Location: Global) to choose a preset city or enter recording coordinates. Leave it Global when unknown. This is the recording location, not the computer's location. The screenshot shows the form without entering or applying a location.
-
-[Step-by-step guide and screenshot provenance →](docs/FEATURES.en.md)
+[Feature guide](docs/FEATURES.en.md) · [Sample attribution and licences](samples/README.en.md)
 
 ## Features
 
@@ -55,7 +41,7 @@ Open **地点：全球** (Location: Global) to choose a preset city or enter rec
 - **Box re-analysis:** draw a time-frequency rectangle, then explicitly analyse it; zoom is independent of selection.
 - **Return to the whole recording:** restore the complete view and full-recording candidates.
 - **Recording-location filter:** coordinates with a year-round prior; use Global when the location is unknown.
-- **Verification links:** a movable card shows Chinese/scientific names and scores, with XC/eBird links.
+- **Verification links:** fixed rows show Chinese/scientific names and confidence values, with XC/eBird links.
 - **Multiple candidates:** coloured time spans correspond to candidates; a menu exposes more candidates.
 
 ## Try the included bird recordings
@@ -98,7 +84,7 @@ Building uses the Python 3.9+ standard library. The finished app needs no Homebr
 
 - Only the **first 120 seconds** are previewed, played, and analysed.
 - The spectrogram displays channel 1 up to 12 kHz. Recognition uses up to eight channels, so the two may represent different sounds in multichannel audio.
-- Scores are not accuracy. Three-second window spans are not precise event boundaries or frequency-localization boxes. Verify candidates by listening.
+- Model confidence is not accuracy. Three-second window spans are not precise event boundaries or frequency-localization boxes. Verify candidates by listening.
 - Geographic filtering can exclude vagrants; very short or narrow selections can remove useful information. Compare with Global or the whole recording.
 - This is locally compiled source, not a notarized, download-and-run installer. Intel and untested macOS versions are not promised compatible.
 
@@ -121,3 +107,5 @@ Build only: `bash scripts/setup.sh --build-only`. Tests: `python3 tests/smoke.py
 Original code is [MIT](LICENSE). BirdNET models are **CC BY-NC-SA 4.0, noncommercial**; LiteRT is Apache 2.0. Code licensing does not override model terms. See [third-party notices](THIRD_PARTY_NOTICES.en.md). This project is not affiliated with BirdNET, XC, or eBird.
 
 Three licensed real bird recordings and one WAV copy are included in [samples](samples/README.en.md); synthetic tests remain script-generated. Issues are welcome in Chinese or English. Include hardware, macOS version, installation steps, and errors. See our [bilingual publishing policy](docs/BILINGUAL.en.md).
+
+The Finder Quick Look host may refuse browser launches. If prompted, choose Copy link and paste it into your browser. Direct eBird opening has been verified in the standalone app.
