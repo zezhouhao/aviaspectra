@@ -9,7 +9,7 @@
 - `PreviewController.swift`：应用和 Quick Look 共用界面、双轴缩放、选框、播放器、返回整体。
 - `Recognition.swift` / `AudioSelection.swift`：48 kHz 转换、3秒分窗、选框带通与后台任务取消。
 - `NativeBirdEngine.swift` / `LiteBridge.c`：LiteRT CPU C API、声学/地理模型、候选缓存。
-- `SpeciesLinks.swift` / `LocationChooser.swift`：物种链接、浮动卡片与地点设置。
+- `SpeciesLinks.swift` / `LocationChooser.swift`：物种链接、固定候选信息栏与地点设置。
 - `main.swift` / `QuickLook.swift`：独立应用与扩展入口。
 - `scripts/`：环境检查、依赖获取、构建、当前用户应用管理。
 - `dependencies/`：固定版本清单；下载内容不进 Git。
@@ -31,7 +31,7 @@ python3 tests/smoke.py
 
 缩放不触发选框识别；选框坐标始终是原音频时间/频率。全览只重置显示，返回整体恢复全段候选。取消旧任务后，旧回调不能覆盖新结果。播放与原文件只读。
 
-声谱 FFT2048/Hann，显示第1声道0–12kHz。识别最多8声道，每声道推断后按类取最大值；V2.4 logits sigmoid 后排序。每窗返回前5且评分≥0.1，界面候选≥0.5。地理模型以纬度、经度、全年(-1)为输入，先验≥0.03保留；不重新校准声学分数。缓存包含音频PCM内容与地点等参数；改变模型/算法时需升级缓存键。
+声谱 FFT2048/Hann，显示第1声道0–12kHz。识别最多8声道，每声道推断后按类取最大值；V2.4 logits sigmoid 后排序。每窗返回前5且置信度≥0.1，界面候选≥0.5。地理模型以纬度、经度、全年(-1)为输入，先验≥0.03保留；不重新校准声学分数。缓存包含音频PCM内容与地点等参数；改变模型/算法时需升级缓存键。
 
 ## 自动检查
 

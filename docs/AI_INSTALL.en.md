@@ -28,7 +28,7 @@ Within the user's authorization, compile locally, install, and enable Quick Look
 - Do not automatically disable other preview extensions. Report conflicts and let the user choose.
 - Do not install a background LaunchAgent, HTTP inference service or Python environment. Inference uses native LiteRT.
 - Never commit private recordings, personal-path logs, tokens or credentials.
-- Do not describe scores as accuracy, or promise geographic filtering always improves recognition.
+- Do not describe confidence as accuracy, or promise geographic filtering always improves recognition.
 - State when a new system or clean account has not been tested. The author's results are not proof of this user's installation.
 
 ## Handoff example

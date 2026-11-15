@@ -19,7 +19,7 @@ Drag a rectangle on the spectrogram. Its yellow label shows original time and fr
 
 ## Candidates and links
 
-The floating card displays up to three candidates; drag its background to avoid obscuring the plot. A menu exposes more candidates. Chinese names, scientific names, scores and timeline colours correspond. Click a scientific name for XC, or eBird for its species page. Taxonomy differences can break a link and do not establish an identification.
+Fixed rows above the spectrogram display up to three candidates, one per row. A menu exposes more candidates. Chinese names, scientific names, confidence values and timeline colours correspond. Click a scientific name for XC, or eBird for its species page. Taxonomy differences can break a link and do not establish an identification.
 
 Time spans merge overlapping three-second windows for a species. They do not precisely locate event boundaries or frequency bands. Multiple candidates can reflect mixed bird sounds or misclassification.
 
@@ -30,3 +30,5 @@ Use **地点：全球** (Location: Global) to choose a city preset or enter the 
 ## Data and privacy
 
 Audio is neither modified nor uploaded. Initial setup downloads models; inference is offline. Cached candidates are associated with content hashes. Clicking a species link sends the species name or code to its website via your browser, never the audio. Each app/extension stores inference caches under `AviaSpectra/` in its system cache directory.
+
+The Finder Quick Look host may refuse browser launches. If prompted, choose Copy link and paste it into your browser. Direct eBird opening has been verified in the standalone app.

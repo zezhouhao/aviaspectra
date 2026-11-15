@@ -33,3 +33,7 @@ Only do this after the user chooses to switch. Other audio preview extensions ma
 ## Reporting an issue
 
 Use the bilingual Issue template. Include chip, macOS, developer tools, failing stage and logs with private paths removed. Do not upload credentials or unauthorized recordings. Synthetic checks: `python3 tests/smoke.py`.
+
+## Species links do not open a browser
+
+The Finder Quick Look host may refuse browser launches. If prompted, choose Copy link and paste it into your browser. Direct eBird opening has been verified in the standalone app.
