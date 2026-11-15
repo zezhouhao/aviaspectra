@@ -3,6 +3,14 @@
 [中文](CHANGELOG.md)
 
 
+## 1.0.1 — 2026-11-15
+
+- Replace the plot overlay with fixed, larger species rows above the spectrogram.
+- Enlarge eBird buttons; route Quick Look links through the extension host and offer Copy link when refused.
+- Use “置信度” (confidence) consistently; distinguish model confidence from accuracy.
+- Add 850/1080 pt, single/multiple candidate, button-bounds and action-routing checks.
+- Update real screenshots and bilingual docs; keep the included bird recordings.
+
 ## 1.0.0 — 2026-11-13
 
 First source-sharing version, publicly named AviaSpectra (谱羽). Public release preparation and fresh-machine installation validation are separate; this record does not claim a completed GitHub release or passing online CI.
